@@ -26,7 +26,7 @@ public class LevelUIController : MonoBehaviour
                 levelPlayerData = newLeveldata;
             }
 
-            levelInfo.SetLevelInfo(data.Id, data.Id == 1 || playerData.LevelData[data.Id - 1].IsCompleted, data.Image, lockedImage
+            levelInfo.SetLevelInfo(data.Id, data.Id == 1 || playerData.LevelData.Single(x => x.LevelId == data.Id - 1).IsCompleted, data.Image, lockedImage
                 , levelPlayerData.NumberOfStars != 0 ? Stars[levelPlayerData.NumberOfStars - 1] : null);
         }
     }

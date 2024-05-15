@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PromptController : MonoBehaviour
@@ -27,4 +28,15 @@ public class PromptController : MonoBehaviour
         startButton.gameObject.SetActive(false);
         animator.SetTrigger("PlayMoveToTopRight");
     }
+
+    public void GoToNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
 }

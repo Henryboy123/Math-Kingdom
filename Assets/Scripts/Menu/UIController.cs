@@ -20,6 +20,6 @@ public class UIController : MonoBehaviour
 
     public void createBrickGameObject(Transform buttonTransform, GameObject brickPrefab)
     {
-        Instantiate(brickPrefab, buttonTransform.position + Vector3.right, Quaternion.identity);
+        Instantiate(brickPrefab, buttonTransform.position + Vector3.right * 1.5f, Quaternion.identity);
     }
 }

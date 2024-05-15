@@ -1,5 +1,7 @@
 using Data;
+using System;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     private LocalDB localDb;
     private float startTime;
-    // Start is called before the first frame update
+
     void Start()
     {
         EventsManager.Instance.OnGameStart.AddListener(StartTimer);
@@ -32,12 +34,10 @@ public class GameManager : MonoBehaviour
         }
 
         localDb.SaveLevelData(levelId, true, starCount);
-        print(timePassed);
     }
 
     public void StartTimer()
     {
         startTime = Time.time;
-        print(startTime);
     }
 }

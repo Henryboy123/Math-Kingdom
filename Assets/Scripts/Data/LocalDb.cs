@@ -47,7 +47,6 @@ namespace Data
 
         public void SaveLevelData(int levelId, bool isCompleted, int numberOfStarts)
         {
-            print($"Saving new data {levelId}, {isCompleted}, {numberOfStarts}");
             var existingLeveldata = database.LevelData.FirstOrDefault(x => x.LevelId == levelId);
             if (existingLeveldata == null)
             {
@@ -86,9 +85,9 @@ namespace Data
     [Serializable]
     public class PlayerData
     {
-        public int CoinAmount { get; set; }
+        public int CoinAmount;
 
-        public List<LevelData> LevelData { get; set; }
+        public List<LevelData> LevelData;
 
         public PlayerData()
         {
@@ -96,13 +95,14 @@ namespace Data
         }
     }
 
+    [Serializable]
     public class LevelData
     {
-        public int LevelId { get; set; }
+        public int LevelId;
 
-        public bool IsCompleted { get; set; }
+        public bool IsCompleted;
 
-        public int NumberOfStars { get; set; }
+        public int NumberOfStars;
 
         public static LevelData Default(int levelId)
         {
