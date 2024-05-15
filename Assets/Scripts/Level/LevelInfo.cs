@@ -26,6 +26,10 @@ public class LevelInfo : MonoBehaviour
         LockedImage.sprite = lockedImage;
         StarsImage.sprite = starsImage;
 
+        if (starsImage == null)
+        {
+            StarsImage.enabled = false;
+        }
         if (IsUnlocked)
         {
             LockedImage.enabled = false;

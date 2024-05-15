@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UIElements;
 
 public class TransparentBoxTracker : MonoBehaviour
@@ -13,7 +15,8 @@ public class TransparentBoxTracker : MonoBehaviour
     public int layerId = 0;
     void Start()
     {
-        for (int layer = 1; layer <= 9; layer++)
+        EventsManager.Instance.OnEndDrag.AddListener(CheckLayerFillState);
+        for (int layer = 1; layer <= 10; layer++)
         {
             string layerKey = $"Layer {layer}";
             layerFilledState[layerKey] = false;
@@ -32,48 +35,52 @@ public class TransparentBoxTracker : MonoBehaviour
         }
     }
 
-
-    void Update()
-    {
-        CheckLayerFillState();
-    }
-
     void CheckLayerFillState()
     {
         foreach (var keyValuePair in boxDictionary)
         {
             string layerKey = keyValuePair.Key;
             List<TransparentBox> boxes = keyValuePair.Value;
-            int layerNumber = keyValuePair.Key[keyValuePair.Key.Length - 1] - '0';
+            int layerNumber = int.Parse(keyValuePair.Key.Split(' ').Last());
             bool allBoxesChanged = true;
 
-            if (layerNumber == currentUnfilledRow)
+            if (layerNumber != currentUnfilledRow)
             {
-                foreach (TransparentBox box in boxes)
+                continue;
+            }
+
+            print(layerNumber);
+            print(currentUnfilledRow);
+
+            foreach (TransparentBox box in boxes)
+            {
+                if (!box.HasChangedSprite())
                 {
-                    if (!box.HasChangedSprite())
-                    {
-                        allBoxesChanged = false;
-                        return;
-                    }
+                    allBoxesChanged = false;
+                    break;
                 }
-                currentUnfilledRow++;
             }
-            else
+
+            if (!allBoxesChanged)
             {
-                return;
+                break;
             }
+            currentUnfilledRow++;
 
 
             // If all boxes in the layer have changed their sprites and the layer isn't already marked as filled
             if (allBoxesChanged && !layerFilledState[layerKey])
             {
                 layerFilledState[layerKey] = true;
-                float fillPercentage = 1f / 9f;
+                float fillPercentage = 1f / 10f;
 
                 columnFillAmountUpdater.UpdateFillAmount(fillPercentage);
                 Debug.Log($"{layerKey} is fully filled!");
                 EmptyBoxes(layerKey);
+                if (currentUnfilledRow - 1 == boxDictionary.Keys.Count)
+                {
+                    EventsManager.Instance.OnWin.Invoke();
+                }
             }
         }
     }

@@ -47,13 +47,18 @@ namespace Data
 
         public void SaveLevelData(int levelId, bool isCompleted, int numberOfStarts)
         {
+            print($"Saving new data {levelId}, {isCompleted}, {numberOfStarts}");
             var existingLeveldata = database.LevelData.FirstOrDefault(x => x.LevelId == levelId);
             if (existingLeveldata == null)
             {
                 existingLeveldata = LevelData.Default(levelId);
+                database.LevelData.Add(existingLeveldata);
+            }
+            if (existingLeveldata.NumberOfStars < numberOfStarts)
+            {
+                existingLeveldata.NumberOfStars = numberOfStarts;
             }
             existingLeveldata.IsCompleted = isCompleted;
-            existingLeveldata.NumberOfStars = numberOfStarts;
         }
 
         private void WriteToFile(string json)

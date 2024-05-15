@@ -20,6 +20,7 @@ public class PromptController : MonoBehaviour
     }
     public void onStart()
     {
+        EventsManager.Instance.OnGameStart.Invoke();
         castleGrid.SetActive(true);
         UiCanvas.gameObject.SetActive(true);
         constructionTower.gameObject.SetActive(true);

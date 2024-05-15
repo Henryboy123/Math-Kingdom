@@ -11,7 +11,7 @@ public class LevelUIController : MonoBehaviour
     [SerializeField] private GameObject levelInfoPrefab;
     private Transform levelPanelParent;
 
-    private void Awake()
+    private void Start()
     {
         levelPanelParent = transform;
         var playerData = LocalDB.Instance.database;
