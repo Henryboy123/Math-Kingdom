@@ -49,12 +49,9 @@ public class TransparentBoxTracker : MonoBehaviour
                 continue;
             }
 
-            print(layerNumber);
-            print(currentUnfilledRow);
-
             foreach (TransparentBox box in boxes)
             {
-                if (!box.HasChangedSprite())
+                if (!box.HasChangedSprite)
                 {
                     allBoxesChanged = false;
                     break;
@@ -77,7 +74,7 @@ public class TransparentBoxTracker : MonoBehaviour
                 columnFillAmountUpdater.UpdateFillAmount(fillPercentage);
                 Debug.Log($"{layerKey} is fully filled!");
                 EmptyBoxes(layerKey);
-                if (currentUnfilledRow - 1 == boxDictionary.Keys.Count)
+                if (currentUnfilledRow - 1 == boxDictionary.Keys.Count && DragController.Instance.WinCondition())
                 {
                     EventsManager.Instance.OnWin.Invoke();
                 }

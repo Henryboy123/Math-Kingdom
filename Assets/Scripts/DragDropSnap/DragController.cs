@@ -1,7 +1,9 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class DragController : MonoBehaviour
+public class DragController : MonoBehaviourSingleton<DragController>
 {
     public Dragable LastDraged => _lastDraged;
     public int stoneBrickCount = 0;
@@ -14,6 +16,7 @@ public class DragController : MonoBehaviour
     private TextMeshProUGUI stoneBrick;
     private TextMeshProUGUI goldBrick;
     private string brickType;
+    [SerializeField] private LevelMetadata levelMetadata;
     [SerializeField] public string gridType;
     [SerializeField] private GameObject stoneBrickObject;
     [SerializeField] private GameObject goldBrickObject;
@@ -22,8 +25,9 @@ public class DragController : MonoBehaviour
     [SerializeField] private AudioClip audioClip;
     private AudioSource audioSource;
 
-    void Awake()
+    protected void Awake()
     {
+        base.Awake();
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -104,58 +108,60 @@ public class DragController : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         _screenPosition = new Vector2(mousePos.x, mousePos.y);
         RaycastHit2D hit = Physics2D.Raycast(_worldPosition, Vector2.zero, 20, TransparentBoxLayer);
+        Sprite newSprite;
 
         if (hit.collider != null && hit.collider.gameObject.CompareTag("DropValid"))
         {
             GameObject transparentBox = hit.collider.gameObject;
-            if (transparentBox != null)
+            if (transparentBox.TryGetComponent<TransparentBox>(out var component))
             {
-                if (_lastDraged.BrickType == BrickTypeEnum.Stone)
+                SpriteRenderer spriteRenderer = transparentBox.GetComponent<SpriteRenderer>();
+                newSprite = Resources.Load<Sprite>("Sprites/TransparentBox");
+
+                if (component.AssignedBrickType != _lastDraged.BrickType)
                 {
-                    stoneBrickCount += 1;
+                    switch (component.AssignedBrickType)
+                    {
+                        case BrickTypeEnum.Stone:
+                            stoneBrickCount--;
+                            break;
+                        case BrickTypeEnum.Gold:
+                            goldBrickCount--;
+                            break;
+                    }
+
+                    if (_lastDraged.BrickType == BrickTypeEnum.Stone)
+                    {
+                        newSprite = Resources.Load<Sprite>("Sprites/StoneTileConstruction");
+                        stoneBrickCount += 1;
+                    }
+                    else if (_lastDraged.BrickType == BrickTypeEnum.Gold)
+                    {
+                        newSprite = Resources.Load<Sprite>("Sprites/GoldTileConstruction");
+                        goldBrickCount += 1;
+                    }
                     stoneBrick.text = stoneBrickCount.ToString();
-                }
-                else if (_lastDraged.BrickType == BrickTypeEnum.Gold)
-                {
-                    goldBrickCount += 1;
                     goldBrick.text = goldBrickCount.ToString();
                 }
 
-                SpriteRenderer spriteRenderer = transparentBox.GetComponent<SpriteRenderer>();
-                Sprite newSprite;
-
-                if (spriteRenderer != null)
-                {
-                    if (gridType == "Gold")
-                    {
-                        newSprite = Resources.Load<Sprite>("Sprites/GoldTileConstruction");
-                        PlayAudio();
-                        PlayParticle();
-                    }
-                    else if (gridType == "Stone")
-                    {
-                        newSprite = Resources.Load<Sprite>("Sprites/StoneTileConstruction");
-                    }
-                    else
-                    {
-                        newSprite = Resources.Load<Sprite>("Sprites/TransparentBox");
-                    }
-
-                    spriteRenderer.sprite = newSprite;
-                }
-                else
-                {
-                    Debug.LogWarning("The collided GameObject does not have a SpriteRenderer component.");
-                }
-
-                Destroy(_lastDraged.gameObject);
+                PlayAudio();
+                PlayParticle();
+                spriteRenderer.sprite = newSprite;
+                component.AssignedBrickType = _lastDraged.BrickType;
             }
 
             EventsManager.Instance.OnEndDrag.Invoke();
             UpdateDragStatus(false);
+            Destroy(_lastDraged.gameObject);
         }
     }
 
+    public bool WinCondition()
+    {
+        var currentLevelIndex = int.Parse(SceneManager.GetActiveScene().name.Split(' ').Last());
+        var levelInfo = levelMetadata.LevelImages.First(x => x.Id == currentLevelIndex);
+        return levelInfo.StoneCount == stoneBrickCount && levelInfo.GoldCount == goldBrickCount;
+    }
 
     void UpdateDragStatus(bool isDragging)
     {

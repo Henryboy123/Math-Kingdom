@@ -14,4 +14,8 @@ public class LevelImageData
 {
     public int Id;
     public Sprite Image;
+    public int StoneCount;
+    public int GoldCount;
+    [TextArea]
+    public string LevelDescription;
 }

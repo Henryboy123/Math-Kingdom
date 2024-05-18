@@ -175,7 +175,7 @@ MonoBehaviour:
   IsDraging: 0
   LastPosition: {x: 0, y: 0, z: 0}
   gridType: 
-  BrickType: 1
+  BrickType: 2
 --- !u!95 &6021978720071434427
 Animator:
   serializedVersion: 5

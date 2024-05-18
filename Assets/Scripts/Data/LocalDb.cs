@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Data
@@ -72,7 +71,7 @@ namespace Data
         {
             if (!File.Exists(path))
             {
-                File.Create(path);
+                using (File.Create(path)) { };
                 database = new PlayerData();
                 Save();
             }

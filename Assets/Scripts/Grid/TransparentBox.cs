@@ -4,6 +4,7 @@ public class TransparentBox : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Sprite originalSprite;
+    public BrickTypeEnum AssignedBrickType = BrickTypeEnum.None;
 
     void Start()
     {
@@ -11,9 +12,5 @@ public class TransparentBox : MonoBehaviour
         originalSprite = spriteRenderer.sprite;
     }
 
-    public bool HasChangedSprite()
-    {
-        // Compare the current sprite to the original sprite
-        return spriteRenderer.sprite != originalSprite;
-    }
+    public bool HasChangedSprite => AssignedBrickType != BrickTypeEnum.None;
 }

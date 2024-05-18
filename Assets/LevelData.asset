@@ -15,13 +15,40 @@ MonoBehaviour:
   LevelImages:
   - Id: 1
     Image: {fileID: 21300000, guid: 44aafa35e69e82e47a7bdbcb6e8f2e4e, type: 3}
+    StoneCount: 13
+    GoldCount: 21
+    LevelDescription: "\u0544\u0578\u0563\u0565\u0580\u0568 \u057D\u057F\u0565\u0572\u056E\u0565\u056C
+      \u0565\u0576 \u0584\u0565\u0566 \u0570\u0561\u0574\u0561\u0580 \u056F\u0561\u056D\u0561\u0580\u0564\u0561\u056F\u0561\u0576
+      \u0561\u057D\u057F\u0572\u0561\u0575\u056B\u0576 \u0584\u0561\u0580\u0565\u0580\u0589
+      \u0531\u0574\u0580\u0578\u0581\u0568 \u056F\u0561\u057C\u0578\u0582\u0581\u0565\u056C\u0578\u0582
+      \u0570\u0561\u0574\u0561\u0580 \u0564\u0578\u0582 \u057A\u0565\u057F\u0584
+      \u0567 \u0585\u0563\u057F\u0561\u0563\u0578\u0580\u056E\u0565\u057D \u0574\u056B\u0561\u0575\u0576
+      34-\u0568: \u0548\u0580\u057A\u0565\u057D\u0566\u056B \u056F\u0561\u057C\u0578\u0582\u0581\u0565\u057D
+      \u0570\u0561\u0577\u057E\u056B \u0561\u057C, \u0578\u0580 \u0561\u0580\u056E\u0561\u0569\u0561\u0563\u0578\u0582\u0575\u0576
+      \u0584\u0561\u0580\u0565\u0580\u0568 \u056C\u056B\u0576\u0565\u0576 8-\u0578\u057E
+      \u0561\u057E\u0565\u056C \u0584\u0561\u0576 \u0578\u057D\u056F\u0565 \u0584\u0561\u0580\u0565\u0580\u0568\u0589"
   - Id: 2
     Image: {fileID: 21300000, guid: d463a0fdc4814f642b5fd5d31f2a5ad3, type: 3}
+    StoneCount: 0
+    GoldCount: 0
+    LevelDescription: 
   - Id: 3
     Image: {fileID: 21300000, guid: 4a1c535267444d544afdac7d2885fab8, type: 3}
+    StoneCount: 0
+    GoldCount: 0
+    LevelDescription: 
   - Id: 4
     Image: {fileID: 21300000, guid: 14d2a4d479c691240b98b1b0c43cbeaa, type: 3}
+    StoneCount: 0
+    GoldCount: 0
+    LevelDescription: 
   - Id: 5
     Image: {fileID: 21300000, guid: 220597b36fc630841ab5ea2fbb297351, type: 3}
+    StoneCount: 0
+    GoldCount: 0
+    LevelDescription: 
   - Id: 6
     Image: {fileID: 21300000, guid: 350754f2d099bbf4a82f208b856d9905, type: 3}
+    StoneCount: 0
+    GoldCount: 0
+    LevelDescription: 
